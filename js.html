@@ -16,25 +16,54 @@ function crearTablaContactos()
             let tablaHeader = document.createElement('thead');
             let tablaBody = document.createElement('tbody');
 
-            Array.from(obj).forEach((filaActual,i) =>
+            
+            //PRIMERA FORMA DE HACERLO
+            
+            //header de la tabla
+            let primeraFila = document.createElement('tr');
+            for(let i=0; i<obj[0].length; i++)
+            {
+                let celda = document.createElement('td');
+                celda.textContent = obj[0][i];
+                primeraFila.appendChild(celda);
+            }
+            tablaHeader.appendChild(primeraFila);
+            tabla.appendChild(tablaHeader);
+
+            //body de la tabla
+            for(let i=1; i<obj.length; i++)
+            {
+                let fila = document.createElement('tr');
+                for(let j = 0; j<obj[i].length; j++)
                 {
-                    let fila = document.createElement('tr');
-                    filaActual.forEach(celdaActual =>
-                        {
-                            let celda = document.createElement('td');
-                            celda.textContent = celdaActual;
-                            fila.appendChild(celda);
-                        });
-                        if(i==0)
-                        {
-                           tablaHeader.appendChild(fila);
-                           tabla.appendChild(tablaHeader); 
-                        }
-                        else
-                        {
-                            tablaBody.appendChild(fila);
-                        }
-                });
+                    let celda = document.createElement('td');
+                    celda.textContent=obj[i][j];
+                    fila.appendChild(celda);
+                }
+                tablaBody.appendChild(fila);
+            }
+
+            // SEGUNDA FORMA DE HACERLO
+            
+            // Array.from(obj).forEach((filaActual,i) =>
+            //     {
+            //         let fila = document.createElement('tr');
+            //         filaActual.forEach(celdaActual =>
+            //             {
+            //                 let celda = document.createElement('td');
+            //                 celda.textContent = celdaActual;
+            //                 fila.appendChild(celda);
+            //             });
+            //             if(i==0)
+            //             {
+            //                tablaHeader.appendChild(fila);
+            //                tabla.appendChild(tablaHeader); 
+            //             }
+            //             else
+            //             {
+            //                 tablaBody.appendChild(fila);
+            //             }
+            //     });
 
                 //agregamos clases a la cabecera
                 tablaHeader.classList.add('table-dark')
