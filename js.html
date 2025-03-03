@@ -3,8 +3,11 @@
 
 function crearTablaContactos()
 {
-    let tabla = document.getElementById('tablaContactos');
-    if(tabla) tabla.remove();
+    //eliminar la tabla
+    eliminarTabla();
+
+    //crear loader
+    crearLoaderPuntos('divContactos');
 
     google.script.run
     .withSuccessHandler(crearTablaContactosCorrectamente)
@@ -81,12 +84,17 @@ function crearTablaContactosCorrectamente(obj)
                 document.getElementById('divContactos').appendChild(tabla);
                 //mostrar notificacion de ok
                 crearNotificacionOK('Contactos obtenidos correctamente', 'Todo en orden');
+                //eliminaremos el loader
+                eliminarLoader();
         }
  
  function crearTablaContactosError()
  {
     //mostrar notificacion de error
     crearNotificacionError('No se han podido leer los contactos', 'ERROR');
+
+    //eliminaremos el loader
+    eliminarLoader();
  }
 
  function crearNotificacion(mensaje, titulo)
@@ -142,6 +150,40 @@ function crearTablaContactosCorrectamente(obj)
     elementoNotificacion.style.backgroundColor=getComputedStyle(document.documentElement).getPropertyValue(color);
  }
 
+function crearLoader(elementoPadre)
+{
+    eliminarLoader();
+    let loader = document.createElement('div');
+    loader.id = 'loader';
+    loader.appendChild(document.createElement('div'));
+    loader.appendChild(document.createElement('div'));
+    loader.appendChild(document.createElement('div'));
+    loader.appendChild(document.createElement('div'));
+    return document.getElementById(elementoPadre).appendChild(loader);
+}
 
+function crearLoaderPuntos(elementoPadre)
+{
+    let loader = crearLoader(elementoPadre);
+    loader.classList.add('lds-ellipsis');
+}
+
+function crearLoaderAnillo(elementoPadre)
+{
+    let loader = crearLoader(elementoPadre);
+    loader.classList.add('lds-ring');
+}
+
+function eliminarLoader()
+{
+    let loader =document.getElementById('loader');
+    if(loader) loader.remove();
+}
+
+function eliminarTabla()
+{
+    let tabla = document.getElementById('tablaContactos');
+    if(tabla) tabla.remove();
+}
 
 </script>
